@@ -4,7 +4,6 @@ STARTING_POSITION = [0, -20, -40]
 STEP_LEN = 20
 class snake():
     def __init__(self):
-        self.snake_length = 3
         self.snake_body = []
         self.create_snake()
         self.snake_head =  self.snake_body[0]
@@ -49,11 +48,11 @@ class snake():
         game_over.color("white")
         game_over.hideturtle()
         if self.snake_head.xcor() > 260 or self.snake_head.xcor() < -260 or self.snake_head.ycor() > 260 or self.snake_head.ycor() < -260:
-            game_over.write("Game Over!!", align="center", font=('Arial', 15, 'normal'))
+            # game_over.write("Game Over!!", align="center", font=('Arial', 15, 'normal'))
             return False
         for i in range(len(self.snake_body) - 1, 0, -1):
             if self.snake_head.distance(self.snake_body[i]) <= 15:
-                game_over.write("Game Over!!", align="center", font=('Arial', 15, 'normal'))
+                # game_over.write("Game Over!!", align="center", font=('Arial', 15, 'normal'))
                 return False
         return True
     def increase_snake(self):
@@ -72,8 +71,13 @@ class snake():
             add_y = -STEP_LEN
         else:
             add_y = STEP_LEN
-        new_xcor = self.snake_body[self.snake_length-1].xcor() + add_x
-        new_ycor = self.snake_body[self.snake_length-1].ycor() + add_y
+        new_xcor = self.snake_body[len(self.snake_body)-1].xcor() + add_x
+        new_ycor = self.snake_body[len(self.snake_body)-1].ycor() + add_y
         new_snake_body.goto(new_xcor,new_ycor)
         self.snake_body.append(new_snake_body)
-        self.snake_length += 1
+    def reset(self):
+        for i in self.snake_body:
+            i.goto(1000,1000)
+        self.snake_body.clear()
+        self.create_snake()
+        self.snake_head = self.snake_body[0]
